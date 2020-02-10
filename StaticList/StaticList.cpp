@@ -40,8 +40,8 @@ bool StaticList<T>::Insert(const T& x, int index /*= 1*/)
 			{
 				j = StList[j].curse;
 			}
-			StList[k].curse = StList[j].curse;
-			StList[j].curse = k;
+				StList[k].curse = StList[j].curse;
+				StList[j].curse = k;
 			length++;
 			return true;
 		}
@@ -90,13 +90,12 @@ void StaticList<T>::Show() const
 	else
 	{
 		int k = StList[MAXSIZE - 1].curse;
-		cout << "This List is:\n";
-		int count = 0;
+		cout << "---------------%List%----------------:\n";
 		for (int i = 1; i <= length; i++)
 		{
-			cout << StList[i].data << "\t";
-			count++;
-			if (!(count % 5)) cout << endl;
+			cout << StList[k].data << "\t";
+			k = StList[k].curse;
+			if (!(i % 5)) cout << endl;
 		}
 		cout << endl;
 	}
@@ -123,8 +122,8 @@ void StaticList<T>::DeleteSpace(int index)
 template <class T>
 int StaticList<T>::NewSpace()
 {
-	int i = StList[0].curse;
-	if (StList[0].curse)
+	int i = StList[0].curse; // the current curse is always stored in StList[0]
+	if (i) // not zero means not full
 	{
 		StList[0].curse = StList[i].curse;
 	}
