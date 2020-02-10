@@ -1,5 +1,5 @@
 #pragma once
-const int MAXSIZE = 10000;
+const int MAXSIZE = 1000;
 
 template <class T>
 class StaticList
