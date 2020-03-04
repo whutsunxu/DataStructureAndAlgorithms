@@ -1,1 +1,1 @@
-the binary is developed based on the skywang work, see more details at https://www.cnblogs.com/skywang12345/p/3576373.html
+the binary search tree is developed based on the skywang work, see more details at https://www.cnblogs.com/skywang12345/p/3576373.html
