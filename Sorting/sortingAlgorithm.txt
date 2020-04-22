@@ -1,0 +1,126 @@
+(1) Algorithm：inserting sort
+input：Array A, comparator funcB
+output：sorted array A
+complexity: O(N^2)
+
+for i [1, A.size) by inr 1
+do
+	tmp<-- A[i]
+	for j [i,0) by der 1 
+	do
+		if funcB(A[j-1],tmp)
+		do
+			A[j]<--A[j-1]
+		end
+	end
+	A[j]<--tmp
+end
+(2) ALgorithm: shell sort(shell increment)
+input: Array A
+output: sorted array A, comparator funcB
+complexity: O(N^2)
+
+for increment [ceil(A.size/2), 1] by inr    ceil(increment/2)
+do
+	for i increment to A.size-1 by inr 1
+	do
+		tmp<--A[i]
+		for j i to increment dcr by increment
+		do
+			if funcB(A[j-increment], tmp)
+				A[j]<--A[j-increment]
+			else
+				break
+			end if
+			A[j]<--tmp
+		enddo
+	enddo
+enddo
+
+
+(3) Algorithm: heapsort
+
+input: array A comparator B
+output: sorted array A
+complexity: O(Nlog(N))
+PS: elements in heap store from array index 0 
+:
+a) build heap
+for i [A.size()/2-1, 0] decr by 1 
+do
+	percDown(A, i, A.size(), B)
+enddo
+b) delete min
+for j [A.size()-1, 0) decr by 1
+do 
+	swap(A[0], A[j])
+	percDown(A, 0, j, B)
+enddo
+subroutine: percDown
+input: Array A, i(element to percDown), n(array size), comparator B
+output: array A after i been percDowned
+complexity: O(logN)
+:
+tmp<-- A[i]
+while 2*i + 1 <n
+do
+	child<-- 2*i+1
+	if child != n-1 and B(A[child], a[child+1])
+	do
+		child++
+	enddo
+	if B(tmp, A[child])
+	do
+		A[i]<-A[child]
+	elsedo
+		break;
+	enddo
+enddo
+A[i]<--tmp
+
+(4) Merge sort
+input: arrray A, comparator B
+output: sorted array A
+complexity: O(NlogN)
+: it's an example of divide and conquer method.
+the array is iteratively divided into 2 parted: left half array and right half array.this is called divide operation.
+during the iterative division, the merge function is called to conduction the merge sort for the two parts. this is called conquer.
+Main routine:
+tmpArray.size<--A.size
+mergeSort(A, tmpArray, 0, A.size -1)
+sub routine: mergeSort(A, tmpA, left, right)
+if left <right:
+do
+	center<--(left+right)/2
+	mergeSort(A,tmpA,left,center)
+	mergeSort(A,tmpA,center+1,right)
+	merge(A,tmpA,left,center+1,right)
+enddo
+
+sub routine: merge(A,tmpA,leftPos,rightPos,rightEnd)
+leftEnd<--rightPos-1
+tmpPos<--leftPos
+numEle<--rightEnd-leftPos+1
+while leftPos <=leftEnd && rightPos <=rightEnd : loop for element in the common index part of two halves
+do
+	if(A[leftPos]<=A[rightPos])
+	do
+		tmpA[tmpPos]<--A[leftPos]
+		tmpPos++
+		leftPos++
+	enddo
+	else do
+		tmpA[tmpPos]<--A[rightPos]
+		tmpPos++
+		rightPos++
+	enddo
+enddo
+while leftPos<=leftEnd: copy the rest elements of the left half
+do
+	tmpA[tmpPos++]<--A[leftPos++]
+enddo
+while rightPos<=rightEnd: copy the rest elements of the right half
+do
+	tmpA[tmpPos++]<--A[rightPos++]
+enddo
+A[leftPos:rightEnd]<--tmpA[leftPos:rightEnd] : copy back
