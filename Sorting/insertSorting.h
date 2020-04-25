@@ -8,6 +8,7 @@
   athr:sunxu
   reference:
   */
+const int quickSortLimit = 10;
 template <class Iterator, class Comparator>
 void insertSort(const Iterator& begin, const Iterator& end, Comparator func = std::less<decltype(*begin)>)
 {
@@ -145,4 +146,54 @@ void mergeSort(std::vector<Comparable>& A, Comparator func)
 {
 	std::vector<Comparable> tmpA(A.size());     // can it be replaced?
 	mergeSort1(A, tmpA, 0, int(A.size() - 1), func);
+}
+
+template<class Comparable,class Comparator>
+const Comparable& media3(std::vector<Comparable>& A, 
+						 const int left, const int right, const Comparator func)
+{
+	int center = (left + right) / 2;
+	if (func(A[center], A[left]))
+		std::swap(A[center], A[left]);
+	if (func(A[right], A[left]))
+		std::swap(A[right], A[left]);
+	if (func(A[right], A[center]))
+		std::swap(A[center], A[right]);
+	
+	std::swap(A[center], A[right - 1]);  // move the pivot to index [right-1]
+	return A[right - 1];
+}
+template <class Comparable,class Comparator>
+void quickSort1(std::vector<Comparable>&A, const int left, const int right, Comparator func)
+{
+	if(left + quickSortLimit < right+1)
+	{
+		const Comparable& pivot = media3(A, left, right, func);
+
+		int i = left;
+		int j = right - 1;
+
+		while (true)
+		{
+			while (func(A[++i] ,pivot)) {}
+			while (func(pivot, A[--j])) {}
+			if (i < j)
+				std::swap(A[i], A[j]);
+			else
+				break;
+		}
+
+		std::swap(A[i], A[right - 1]);
+		quickSort1(A, left, i - 1, func);  //the pivot is not in the following sort precess
+		quickSort1(A, i + 1, right, func);
+	}
+	else
+	{
+		insertSort(std::next(A.begin(),left), std::next(A.begin() ,(right+1)), func);
+	}
+}
+template <class Comparable, class Comparator>
+void quickSort(std::vector<Comparable>& A, const int left, const int right, Comparator func)
+{
+	quickSort1(A, left, right-1, func);
 }

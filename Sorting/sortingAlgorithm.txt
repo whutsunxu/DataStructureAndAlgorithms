@@ -124,3 +124,40 @@ do
 	tmpA[tmpPos++]<--A[rightPos++]
 enddo
 A[leftPos:rightEnd]<--tmpA[leftPos:rightEnd] : copy back
+
+
+Algorithm: quickSort
+input: Array A
+output: sorted Array A
+complexity: O(NlogN)
+
+iterative Routine:
+quickSort(A, left, right):
+1) if right-left <10:
+do
+  insertSorted()
+else
+  pivot <-- media3(A, left, right)
+  i<-- left
+  j<-- right-1  // set the operation range, because the A[right-1] is stored with pivot, so not in the operation range
+  while(true)
+  do 
+    while(A[++i]>pivot){}
+	while(A[--j]<pivot){}
+	if(i<j)
+	  swap(A[i],A[j])
+	else
+	  break
+  done
+  swap(A[i],A[right-1])  // recover the pivot
+
+  quickSort(A,left,i-1)
+  quickSOrt(A,i+1,right)
+done
+
+subroutine: 
+media3(A, left, right):
+	center<-- (left + right)/2
+	sorted(A[left],A[center], A[right])
+	swap(A[center], A[right-1])
+	return A[right-1]

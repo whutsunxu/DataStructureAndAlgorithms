@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <time.h>
 
-const int M = 10000;
+const int M = 1000000;
 
 int main()
 {
@@ -16,12 +16,13 @@ int main()
 	//srand(unsigned(time(nullptr)));
 	for (int i = 0; i < M; i++)
 	{
-		A.push_back(int((rand() % 3*M)));
+		A.push_back(int((rand() % 2*M)));
 	}
 	std::vector<int> B(A);
 	std::vector<int> C(A);
 	std::vector<int> D(A);
 	std::vector<int> E(A);
+	std::vector<int> F(A);
 	/* insert sort */
 	std::cout <<"/--------------------insert sort--------------------/\n";
 	//std::cout <<"origin vector A: " << std::endl;
@@ -94,6 +95,21 @@ int main()
 	// after sort
 	std::cout << "\nAfter Sort\n";
 	//for (auto i : E)	std::cout << i << " ";
+	std::cout << "\nTime used: " << mt << " s\n";
+
+	/* quick sort */
+	std::cout << "/--------------------quick sort--------------------/\n";
+	std::cout << "origin vector: " << std::endl;
+	//for (auto i : F) std::cout << i << " ";
+
+	st = clock();
+	quickSort(F, 0, F.size(), funcLess);
+	et = clock();
+	mt = double((et - st)) / CLOCKS_PER_SEC;
+
+	// after sort
+	std::cout << "\nAfter Sort\n";
+	//for (auto i : F)	std::cout << i << " ";
 	std::cout << "\nTime used: " << mt << " s\n";
 	return 0;
 }
